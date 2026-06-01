@@ -1,6 +1,6 @@
 # 🏦 AI-Powered Credit Risk Intelligence Platform
 
-A full-stack credit risk decisioning system built on the [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk) dataset. It combines multi-table feature engineering, a LightGBM classifier with SHAP explainability, an NL→SQL chatbot, and a 4-tab Streamlit dashboard.
+A full-stack credit risk decisioning system built on the [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk) dataset. It combines multi-table feature engineering, a LightGBM classifier with SHAP explainability, an NL→SQL chatbot powered by **Meta Llama-3.1-8b-instant via Groq**, and a 4-tab Streamlit dashboard.
 
 ---
 
@@ -26,7 +26,7 @@ credit_risk_platform/
 │   ├── talk_to_data/
 │   │   ├── db_builder.py        # DuckDB ingestion
 │   │   ├── prompt_templates.py  # LLM system prompt + few-shots
-│   │   ├── nl_to_sql.py         # NL → validated SQL
+│   │   ├── nl_to_sql.py         # NL → validated SQL (via Groq API)
 │   │   └── query_runner.py      # SQL executor + LLM summary
 │   └── app.py                   # Streamlit 4-tab dashboard
 ├── Dockerfile
