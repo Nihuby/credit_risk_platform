@@ -43,15 +43,18 @@ credit_risk_platform/
 - Python 3.11+
 - Kaggle account with `~/.kaggle/kaggle.json` set up
 - Competition rules accepted at [kaggle.com/competitions/home-credit-default-risk/rules](https://www.kaggle.com/competitions/home-credit-default-risk/rules)
-
+- Active **Groq API Key** for the GenAI Talk-to-Data engine
 ### 2. Setup environment
 ```powershell
 python -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
+pip install tabulate
 cp .env.example .env   # then edit .env with your keys
 ```
-
+Configure your .env file using the Groq OpenAI-compatible redirection endpoints:
+OPENAI_API_KEY=gsk_your_groq_api_key_here
+OPENAI_BASE_URL=[https://api.groq.com/openai/v1](https://api.groq.com/openai/v1)
 ### 3. Download dataset
 ```python
 from src.data.loader import download_dataset
@@ -127,17 +130,18 @@ The dataset has ~8% default rate (≈11.8:1 class ratio). We use:
 
 ---
 
-## Prompt Framework (Talk-to-Data)
+Prompt Framework (Talk-to-Data via Groq)
+The NL→SQL system uses an ultra-fast, open-source LLM layer utilizing the Meta Llama-3.1-8b-instant model routed through the Groq Inference Gateway. This setup achieves near-zero latency execution on a structured 3-layer prompt architecture:
 
-The NL→SQL system uses a **3-layer prompt architecture**:
+System prompt — Embeds the full DuckDB database layout schema, hard SQL safety boundaries (forcing SELECT parameters only, strictly blocking DDL/DML vectors), and enforces a clean output payload schema layout structure (response_format={"type": "json_object"}).
 
-1. **System prompt** — Embeds the full DuckDB schema, hard SQL safety rules (SELECT only, no DDL/DML), and output format instructions (strict JSON `{"sql":..., "explanation":...}`).
-2. **Few-shot examples** — 6 hand-crafted user→assistant pairs covering aggregation, filtering, joining, and window functions.
-3. **Live schema injection** — Runtime schema appended if the DB is available.
+Few-shot examples — 6 hand-crafted user→assistant interaction pairs mapping advanced logic structures like joins, sub-aggregations, filter arrays, and mathematical window operations.
 
-**Safety guardrails**: regex-based block on `INSERT/UPDATE/DELETE/DROP/CREATE/ALTER`, mandatory `SELECT` prefix, and 500-row result cap.
+Token Optimization & Schema Injection — Rather than passing raw table contents or deep text rows, only highly compressed, metadata-only data types and relationship definitions are exposed. This preserves Groq’s token limits and guarantees deterministic inference parameters at zero operational cost.
 
-**Offline/demo mode**: keyword-matching fallback queries when `OPENAI_API_KEY` is absent.
+Safety guardrails: Regex parsing engines completely block execution attempts containing dangerous SQL command tokens (INSERT, UPDATE, DELETE, DROP, CREATE, ALTER). A default cap limits query output size arrays to a maximum height of 500 records.
+
+Offline/demo mode: Simple local keyword matching fallback triggers clean sample outputs if the OPENAI_API_KEY environment token variable is blank or unconfigured.
 
 ---
 
