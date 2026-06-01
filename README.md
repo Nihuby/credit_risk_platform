@@ -130,7 +130,8 @@ The dataset has ~8% default rate (≈11.8:1 class ratio). We use:
 
 ---
 
-Prompt Framework (Talk-to-Data via Groq)
+## Prompt Framework (Talk-to-Data via Groq)
+
 The NL→SQL system uses an ultra-fast, open-source LLM layer utilizing the Meta Llama-3.1-8b-instant model routed through the Groq Inference Gateway. This setup achieves near-zero latency execution on a structured 3-layer prompt architecture:
 
 System prompt — Embeds the full DuckDB database layout schema, hard SQL safety boundaries (forcing SELECT parameters only, strictly blocking DDL/DML vectors), and enforces a clean output payload schema layout structure (response_format={"type": "json_object"}).
