@@ -1,0 +1,16 @@
+streamlit
+pandas
+numpy
+scikit-learn
+lightgbm
+shap
+matplotlib
+seaborn
+sqlalchemy
+duckdb
+openai
+python-dotenv
+structlog
+kagglehub==0.3.10
+plotly
+joblib

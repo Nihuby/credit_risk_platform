@@ -1,0 +1,49 @@
+# ── Virtual environments ──────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+
+# ── Environment secrets ───────────────────────────────────────────────────────
+.env
+
+# ── Python cache ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ── Distribution / packaging ──────────────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+
+# ── Jupyter / notebooks ───────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── Data files (large) ────────────────────────────────────────────────────────
+data/*.csv
+data/*.parquet
+data/*.zip
+data/*.duckdb
+
+# ── Trained models ────────────────────────────────────────────────────────────
+models/*.pkl
+models/*.joblib
+models/*.txt
+models/*.json
+
+# ── OS artifacts ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE / editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+logs/
+*.log
